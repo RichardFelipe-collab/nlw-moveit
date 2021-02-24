@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { ChallengesContext } from '../contexts/ChallengesContext';
 import styles from '../styles/components/CountDown.module.css'
 
 //varivel global tipagem global
 let countdownTimeout: NodeJS.Timeout;
 
 export function Countdown() {
+  const { startNewChallenge } = useContext(ChallengesContext)
   const [time, setTime] = useState(25 * 60);
   const [isactive, setIsActive] = useState(false);
 
@@ -34,7 +36,7 @@ export function Countdown() {
     } else if (isactive && time === 0) {
       setHasfinished(true);
       setIsActive(false);
-
+      startNewChallenge();
     }
   }, [isactive, time])
   return (
